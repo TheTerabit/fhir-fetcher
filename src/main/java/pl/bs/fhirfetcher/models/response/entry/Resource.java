@@ -2,8 +2,11 @@ package pl.bs.fhirfetcher.models.response.entry;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Builder;
 import lombok.Data;
+import pl.bs.fhirfetcher.models.DoubleDeserializer;
 import pl.bs.fhirfetcher.models.Patient;
 import pl.bs.fhirfetcher.models.response.entry.resource.*;
 
@@ -19,7 +22,8 @@ public class Resource {
     private final String id;
     private final String gender;
     private final String birthDate;
-    private final List<Name> names;
+    //@JsonDeserialize(using = DoubleDeserializer.class)
+    private final JsonNode names;
     //Observation
     private final Code code;
     private final String effectiveDateTime;
@@ -34,7 +38,7 @@ public class Resource {
                     @JsonProperty("id") String id,
                     @JsonProperty("gender") String gender,
                     @JsonProperty("birthDate") String birthDate,
-                    @JsonProperty("name") List<Name> names,
+                    @JsonProperty("name") JsonNode names,
                     @JsonProperty("code") Code code,
                     @JsonProperty("effectiveDateTime") String effectiveDateTime,
                     @JsonProperty("valueQuantity") ValueQuantity valueQuantity,

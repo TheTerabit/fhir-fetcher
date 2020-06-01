@@ -23,6 +23,7 @@ public class FhirService {
     }
 
     public List<Patient> getPatients() {
+
         return fetchPatients(fhirClient.getPatientsResponse());
     }
 
@@ -30,9 +31,13 @@ public class FhirService {
         return fetchPatients(fhirClient.getPatientHistory(id)).get(0);
     }
 
-    private List<Patient> fetchPatients(FhirResponse fhirResponse) {
+    private List<Patient> fetchPatients(List<FhirResponse> fhirResponses) {
+
         List<Object> objects = new ArrayList<>();
-        fhirResponse.getEntries().stream().forEach(entry -> objects.add(recognizeObject(entry)));
+
+        fhirResponses.stream().forEach(fhirResponse -> {
+            fhirResponse.getEntries().stream().forEach(entry -> objects.add(recognizeObject(entry)));});
+
         List<Patient> patients = new ArrayList<>();
         objects.stream().filter(o -> o instanceof Patient).forEach(patient -> patients.add((Patient) patient));
         List<Observation> observations = new ArrayList<>();
@@ -65,6 +70,7 @@ public class FhirService {
     }
 
     private MedicationRequest createMedicationRequest(Resource resource) {
+        System.out.println("New med");
         MedicationRequest medicationRequest = new MedicationRequest(resource.getMedicationCodeableConcept(),
                                                                 resource.getAuthoredOn(),
                                                                 resource.getDosageInstructions());

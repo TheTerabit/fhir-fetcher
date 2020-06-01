@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import pl.bs.fhirfetcher.models.response.Entry;
+import pl.bs.fhirfetcher.models.response.entry.Link;
 
 import java.util.List;
 
@@ -14,8 +15,11 @@ import java.util.List;
 public class FhirResponse {
 
     private final List<Entry> entries;
+    private final List<Link> links;
 
-    public FhirResponse(@JsonProperty("entry") List<Entry> entries) {
+    public FhirResponse(@JsonProperty("entry") List<Entry> entries,
+                        @JsonProperty("link") List<Link> links) {
         this.entries = entries;
+        this.links = links;
     }
 }

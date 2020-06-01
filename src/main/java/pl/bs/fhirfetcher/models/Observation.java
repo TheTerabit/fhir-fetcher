@@ -17,7 +17,9 @@ public class Observation {
     public Observation(Code code, String effectiveDateTime, ValueQuantity valueQuantity) {
         this.name = code.getText();
         this.dateTime =  ZonedDateTime.parse(effectiveDateTime);
-        this.value = valueQuantity.getValue();
-        this.unit = valueQuantity.getUnit();
+        if (valueQuantity!= null) {
+            this.value = valueQuantity.getValue();
+            this.unit = valueQuantity.getUnit();
+        }
     }
 }
